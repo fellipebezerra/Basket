@@ -1,6 +1,7 @@
 package com.interview.shoppingbasket;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
@@ -50,6 +51,28 @@ public class BasketTest {
 
     @Test
     void consolidateBasketTest() {
-        // Exercise - implement the unit test for consolidate items
+        Basket basket = new Basket();
+
+        // Add BasketItems to the Basket. Assume the BasketItem constructor takes productCode, name, and quantity.
+        basket.add("productCode1", "Item 1", 2);
+        basket.add("productCode2", "Item 2", 1);
+        basket.add("productCode1", "Item 1", 3);
+
+        // Call the consolidateItems method
+        basket.consolidateItems();
+
+        // Assertions to check the consolidation logic
+        assertEquals(2, basket.getItems().size(), "Basket should have 2 items after consolidation");
+
+        // Check if the quantities are consolidated correctly
+        BasketItem consolidatedItem = basket.getItems().stream()
+                .filter(item -> item.getProductCode().equals("productCode1"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(consolidatedItem, "Item with productCode 'productCode1' should exist");
+        assertEquals(5, consolidatedItem.getQuantity(), "Quantity of 'productCode1' items should be 5 after consolidation");
+
+        // Additional checks can be added as needed
     }
 }
