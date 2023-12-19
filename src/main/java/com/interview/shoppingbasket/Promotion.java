@@ -5,7 +5,6 @@ public class Promotion {
     private String description;
     private PromotionType type;
 
-    // Enum for promotion types
     public enum PromotionType {
         TWO_FOR_ONE, // Represents 2 items for the price of 1
         HALF_PRICE, // Represents 50% off retail price
@@ -19,7 +18,6 @@ public class Promotion {
         this.type = type;
     }
 
-    // Getters and Setters
     public String getProductCode() {
         return productCode;
     }

@@ -1,22 +1,18 @@
 package com.interview.shoppingbasket;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CheckoutPipeline {
 
-    private List<CheckoutStep> steps = new ArrayList<>();
+    private final List<CheckoutStep> steps;
 
-    public PaymentSummary checkout(Basket basket) {
-        CheckoutContext checkoutContext = new CheckoutContext(basket);
-        for (CheckoutStep checkoutStep : steps) {
-            checkoutStep.execute(checkoutContext);
-        }
-
-        return checkoutContext.paymentSummary();
+    public CheckoutPipeline(List<CheckoutStep> steps) {
+        this.steps = steps;
     }
 
-    public void addStep(CheckoutStep checkoutStep) {
-        steps.add(checkoutStep);
+    public void execute(CheckoutContext context) {
+        for (CheckoutStep step : steps) {
+            step.execute(context);
+        }
     }
 }

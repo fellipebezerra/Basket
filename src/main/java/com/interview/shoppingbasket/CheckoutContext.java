@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 class CheckoutContext {
-    private Basket basket;
+    private final Basket basket;
     private double retailPriceTotal = 0.0;
-    // Assuming you have a Map to store promotions for each BasketItem
-    private Map<BasketItem, List<Promotion>> itemPromotions;
+
+    private final Map<BasketItem, List<Promotion>> itemPromotions;
     public void setRetailPriceTotal(double retailPriceTotal) {
         this.retailPriceTotal = retailPriceTotal;
     }
@@ -18,11 +18,6 @@ class CheckoutContext {
         this.basket = basket;
         this.itemPromotions = new HashMap<>();
     }
-
-    public PaymentSummary paymentSummary() {
-        return new PaymentSummary(retailPriceTotal);
-    }
-
 
     public Basket getBasket() {
         return basket;

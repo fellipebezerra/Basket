@@ -1,10 +1,16 @@
 package com.interview.shoppingbasket;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import java.util.Arrays;
 
 public class CheckoutPipelineTest {
 
@@ -21,19 +27,27 @@ public class CheckoutPipelineTest {
 
     @BeforeEach
     void setup() {
-        checkoutPipeline = new CheckoutPipeline();
+        MockitoAnnotations.openMocks(this);
+        checkoutPipeline = new CheckoutPipeline(Arrays.asList(checkoutStep1, checkoutStep2));
     }
 
     @Test
-    void returnZeroPaymentForEmptyPipeline() {
-        PaymentSummary paymentSummary = checkoutPipeline.checkout(basket);
+    void processEmptyBasketWithoutError() {
+        CheckoutContext context = new CheckoutContext(new Basket()); // Assuming an empty basket
 
-        assertEquals(paymentSummary.getRetailTotal(), 0.0);
+        assertDoesNotThrow(() -> checkoutPipeline.execute(context));
+        // Additional assertions can be made here if there are specific expectations for an empty basket
     }
 
     @Test
     void executeAllPassedCheckoutSteps() {
-        // Exercise - implement testing passing through all checkout steps
+        CheckoutContext context = new CheckoutContext(basket);
+
+        checkoutPipeline.execute(context);
+
+        // Verify that each step is executed
+        verify(checkoutStep1, times(1)).execute(context);
+        verify(checkoutStep2, times(1)).execute(context);
     }
 
 }

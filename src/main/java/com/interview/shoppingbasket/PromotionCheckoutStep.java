@@ -20,7 +20,6 @@ public class PromotionCheckoutStep implements CheckoutStep {
 
             // Apply the logic to store or use these promotions.
             // This could involve adding them to the CheckoutContext or directly modifying the BasketItem.
-            // For example, you might want to store a list of applicable promotions in the CheckoutContext:
             context.addPromotionsForItem(item, promotions);
         }
     }
