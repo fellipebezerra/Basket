@@ -6,17 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 public class Basket {
-    private final List<BasketItem> items = new ArrayList<>();
+    private final List<BasketItem> items;
 
-    public void add(String productCode, String productName, int quantity) {
-        BasketItem basketItem = new BasketItem();
-        basketItem.setProductCode(productCode);
-        basketItem.setProductName(productName);
-        basketItem.setQuantity(quantity);
-
-        items.add(basketItem);
+    public Basket() {
+        this.items = new ArrayList<>();
     }
 
+    public void add(String productCode, String productName, int quantity, double price) {
+        BasketItem basketItem = new BasketItem(productCode,productName,quantity,price);
+        items.add(basketItem);
+    }
+    public void addItem(BasketItem item) {
+        this.items.add(item);
+    }
     public List<BasketItem> getItems() {
         return items;
     }

@@ -24,7 +24,7 @@ public class RetailPriceCheckoutStepTest {
     @Test
     void setPriceZeroForEmptyBasket() {
 
-        RetailPriceCheckoutStep retailPriceCheckoutStep = new RetailPriceCheckoutStep(pricingService);
+        RetailPriceCheckoutStep retailPriceCheckoutStep = new RetailPriceCheckoutStep();
 
         retailPriceCheckoutStep.execute(checkoutContext);
 
@@ -34,12 +34,12 @@ public class RetailPriceCheckoutStepTest {
     @Test
     void setPriceOfProductToBasketItem() {
 
-        basket.add("product1", "myproduct1", 10);
-        basket.add("product2", "myproduct2", 10);
+        basket.add("product1", "myproduct1", 10, 3.99);
+        basket.add("product2", "myproduct2", 10, 2.0);
 
         when(pricingService.getPrice("product1")).thenReturn(3.99);
         when(pricingService.getPrice("product2")).thenReturn(2.0);
-        RetailPriceCheckoutStep retailPriceCheckoutStep = new RetailPriceCheckoutStep(pricingService);
+        RetailPriceCheckoutStep retailPriceCheckoutStep = new RetailPriceCheckoutStep();
 
         retailPriceCheckoutStep.execute(checkoutContext);
         Mockito.verify(checkoutContext).setRetailPriceTotal(3.99*10+2*10);
